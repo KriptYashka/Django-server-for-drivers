@@ -1,3 +1,5 @@
+import configparser
+
 import influxdb_client, os, time
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
@@ -5,10 +7,12 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 from dotenv import load_dotenv
 
 load_dotenv()
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 token = os.environ.get("INFLUXDB_TOKEN")
-org = "No"
-url = "http://127.0.0.1:8086"
+org = os.getenv("INFLUX_ORG")
+url = config.get('APP', 'INFLUX_URL')
 
 write_client = influxdb_client.InfluxDBClient(url=url, token=token, org=org)
 
@@ -33,5 +37,5 @@ query = """from(bucket: "esp_bucket")
 tables = query_api.query(query, org="No")
 
 for table in tables:
-  for record in table.records:
-    print(record)
+    for record in table.records:
+        print(record)

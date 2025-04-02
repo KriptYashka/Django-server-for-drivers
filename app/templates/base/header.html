@@ -1,0 +1,17 @@
+<header class="py-3 mb-4 border-bottom">
+    <div class="container d-flex flex-wrap justify-content-center">
+        <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
+            <span class="fs-4">Логотип</span>
+        </a>
+        <nav class="nav nav-pills flex-column flex-sm-row">
+            <a class="nav-link link-body-emphasis px-2" href="#">Главная</a>
+            <a class="nav-link link-body-emphasis px-2" href="#">Устройства</a>
+            <a class="nav-link link-body-emphasis px-2" href="#">Регистрация</a>
+            {% if request.user.is_authenticated %}
+            <button class="btn btn-outline-success ms-2" type="button" id="loginButton">Выход</button>
+            {% else %}
+            <button class="btn btn-outline-danger ms-2" type="button" id="logoutButton">Вход</button>
+            {% endif %}
+        </nav>
+    </div>
+</header>

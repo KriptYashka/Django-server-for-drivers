@@ -28,23 +28,6 @@ write_client = influxdb_client.InfluxDBClient(url=url, token=token, org=org)
 bucket = "esp_bucket"
 write_api = write_client.write_api(write_options=SYNCHRONOUS)
 
-
-import paho.mqtt.client as mqtt
-import time
-import random
-
-MQTT_BROKER = "localhost"
-MQTT_TOPIC = "sensors/temperature"
-
-client = mqtt.Client()
-client.connect(MQTT_BROKER, 1883, 60)
-
-while True:
-    temperature = random.uniform(20.0, 30.0)  # Имитация датчика
-    client.publish(MQTT_TOPIC, f"{temperature:.2f}")
-    print(f"Отправлено: {temperature:.2f}°C")
-    time.sleep(2)  # Пауза 2 секунды
-
 class Settings:
     WIDTH = 600
     HEIGHT = 400

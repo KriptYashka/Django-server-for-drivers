@@ -1,4 +1,5 @@
 import paho.mqtt.client as mqtt
+import paho.mqtt.publish as p
 from settings import Settings
 
 
@@ -7,9 +8,9 @@ class MQTTClient:
 
     def __new__(cls, *args, **kwargs):
         if cls.__CLIENT is None:
-            mqtt_broker = Settings.CONFIG.get("APP", "MQTT_BROKER")
             cls.__CLIENT = mqtt.Client()
-            cls.__CLIENT.connect(mqtt_broker, 1883, 60)
+        mqtt_broker = Settings.CONFIG.get("APP", "MQTT_BROKER")
+        cls.__CLIENT.connect(mqtt_broker, 1883, 5)
         return object.__new__(cls)
 
     def publish(self, topic: str, *args, **kwargs):

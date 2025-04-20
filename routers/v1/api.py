@@ -1,6 +1,7 @@
+import json
 import random
 
-from flask import Blueprint
+from flask import Blueprint, jsonify
 
 from clients.mqtt_client import MQTTClient
 
@@ -11,6 +12,12 @@ api_router = Blueprint("api_router", __name__)
 def sensor_temperature():
     mqtt_client = MQTTClient()
     temp = random.random() * 10 + 20
-    mqtt_client.publish("sensor/temperature", temp)
-    return f"Температура: {temp}"
+
+    response = {
+        "temperature": temp
+    }
+
+    mqtt_client.publish("sensor/temperature", json.dumps(response))
+
+    return jsonify(response)
 

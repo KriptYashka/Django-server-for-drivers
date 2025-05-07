@@ -7,7 +7,7 @@ import random
 config = configparser.ConfigParser()
 config.read("config.ini")
 
-MQTT_BROKER = config.get("APP", "MQTT_BROKER")
+MQTT_BROKER = "localhost"
 MQTT_TOPIC = "sensors/temperature"
 
 client = mqtt.Client()

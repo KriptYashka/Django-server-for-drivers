@@ -1,6 +1,6 @@
-# ESP32-S3 API Server
+# ESP32-S3 <-> API Server
 
-Сервер для проекта мониторинга усталости водителей
+Сервер для проекта мониторинга усталости пилотов
 
 ---
 
@@ -18,6 +18,12 @@ sudo docker run -d -p 8086:8086 -v "$PWD/data:/var/lib/influxdb2" -v "$PWD/confi
 python3 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
+```
+
+3. Запустить сервис
+
+```commandline
+flask --app app run
 ```
 
 ---

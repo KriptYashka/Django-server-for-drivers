@@ -23,6 +23,17 @@ class InfluxClient:
             cls.__org = org
         return object.__new__(cls)
 
+    def get(self, topic: str, time_before: int = 1):
+        query_api = self.__CLIENT.query_api()
+        query = f"""
+            from(bucket: "{self.__bucket}")
+              |> range(start: -{time_before}h)
+              |> filter(fn: (r) => r["topic"] == "{topic}")
+        """
+        print("Query: ", query)
+        result = query_api.query(query)
+        return result
+
     def post(self, record):
-        write_qpi = self.__CLIENT.write_api(write_options=SYNCHRONOUS)
-        write_qpi.write(self.__bucket, self.__org, record)
+        write_api = self.__CLIENT.write_api(write_options=SYNCHRONOUS)
+        write_api.write(self.__bucket, self.__org, record)

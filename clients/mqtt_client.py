@@ -14,8 +14,7 @@ class MQTTClient:
         return object.__new__(cls)
 
     def publish(self, topic: str, *args, **kwargs):
-        for arg in args:
-            self.__CLIENT.publish(topic, arg, **kwargs)
+        self.__CLIENT.publish(topic, *args, **kwargs)
 #
 # while True:
 #     temperature = random.uniform(20.0, 30.0)  # Имитация датчика

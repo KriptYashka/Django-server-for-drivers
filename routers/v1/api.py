@@ -23,13 +23,13 @@ def sensor_publish_random_temperature():
     return jsonify(response)
 
 
-@api_router.route("/v1/sensor/temperature", methods=["GET", "POST"])
-def sensor_temperature():
+@api_router.route("/v1/sensor/<sensor_name>", methods=["GET", "POST"])
+def sensor_temperature(sensor_name: str):
     """
     Обращается к InfluxDB, выводит информацию о температуре за последний час
     """
     influxdb_client = InfluxClient("esp_bucket")
-    result = influxdb_client.get("sensor/temperature")
+    result = influxdb_client.get(f"sensor/{sensor_name}")
     print(result)
 
     data = []
@@ -43,13 +43,8 @@ def sensor_temperature():
                 record.get_field(): record.get_value(),
             })
 
-
     response = {
         "data": data
     }
 
     return jsonify(response)
-
-
-
-

@@ -4,13 +4,13 @@
 
 
 def calculate_fatigue(
-        temp: float,
-        co2: float,
-        heart_rate: float,
-        spo2: float,
-        drive_time: float,
-        age: int,
-        gender: str = 'male'
+    temp: float,
+    co2: float,
+    heart_rate: float,
+    spo2: float,
+    drive_time: float,
+    age: int,
+    gender: str = 'male'
 ) -> float:
     """
     Определяет коэффициент усталости

@@ -23,12 +23,12 @@ class InfluxClient:
             cls.__org = org
         return object.__new__(cls)
 
-    def get(self, topic: str, time_before: int = 1):
+    def get(self, field_name: str, time_before: int = 60):
         query_api = self.__CLIENT.query_api()
         query = f"""
             from(bucket: "{self.__bucket}")
-              |> range(start: -{time_before}h)
-              |> filter(fn: (r) => r["topic"] == "{topic}")
+              |> range(start: -{time_before}m)
+              |> filter(fn: (r) => r["_field"] == "{field_name}")
         """
         print("Query: ", query)
         result = query_api.query(query)

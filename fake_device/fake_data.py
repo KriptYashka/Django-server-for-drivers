@@ -15,10 +15,10 @@ client = mqtt.Client()
 client.connect(MQTT_BROKER, 1883, 60)
 
 while True:
-    temperature = random.uniform(20.0, 30.0)
-    co2 = random.uniform(75.0, 95.0)
-    heart_rate = random.uniform(40.0, 120.0)
-    spo2 = random.uniform(80.0, 100.0)
+    temperature = random.uniform(30.0, 50.0)
+    co2 = random.uniform(85.0, 95.0)
+    heart_rate = random.uniform(60.0, 80.0)
+    spo2 = random.uniform(90.0, 100.0)
 
     data = {
         "temperature": temperature,

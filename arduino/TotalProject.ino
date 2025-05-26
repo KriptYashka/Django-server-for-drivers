@@ -280,4 +280,5 @@ void loop() {
   sensorData["co2"] = co2_sensor.get_co2_norm();
 
   mqtt.sendDictOverMQTT(mqtt_topic, sensorData);
+  delay(10);
 }

@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  flask_app:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mosquitto
+      - influxdb
+    environment:
+      - MQTT_BROKER=mosquitto
+      - INFLUXDB_HOST=influxdb
+
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+
+  influxdb:
+    image: influxdb:1.8
+    ports:
+      - "8086:8086"
+    volumes:
+      - ./influxdb/data:/var/lib/influxdb
+    environment:
+      - INFLUXDB_DB=esp_bucket
+      - INFLUXDB_ADMIN_USER=root
+      - INFLUXDB_ADMIN_PASSWORD=rootroot
+
+  telegraf:
+    image: telegraf:1.24
+    volumes:
+      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf
+    depends_on:
+      - influxdb
+      - mosquitto

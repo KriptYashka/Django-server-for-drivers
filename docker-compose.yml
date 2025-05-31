@@ -4,23 +4,22 @@ services:
   flask_app:
     build: .
     ports:
-<<<<<<< Updated upstream
       - "8000:8000"
+      - "5000:5000"
     depends_on:
       - mosquitto
       - influxdb
     environment:
       - MQTT_BROKER=mosquitto
       - INFLUXDB_HOST=influxdb
-=======
-      - "5000:5000"  # Flask по умолчанию на 5000
+      - "5000:5000"
     environment:
       - FLASK_APP=app.py
       - FLASK_ENV=development
-      - MQTT_BROKER=mosquitto
+      - MQTT_BROKER=localhost
       - INFLUXDB_URL=http://influxdb:8086
-      - INFLUXDB_TOKEN=your-admin-token
-      - INFLUXDB_ORG=your-org
+      - INFLUXDB_TOKEN=_dfQiUt-67Aqd9fQhvnCOP2yGSbHJS7N0XYmR_OqZY6jxCaebpBrwOlktLzYHahZ2QJYhfEN9JIh9KhNGhwlzA==
+      - INFLUXDB_ORG=No
       - INFLUXDB_BUCKET=esp_bucket
     depends_on:
       - influxdb
@@ -44,35 +43,16 @@ services:
       interval: 5s
       timeout: 3s
       retries: 3
->>>>>>> Stashed changes
 
   mosquitto:
     image: eclipse-mosquitto:2.0
     ports:
       - "1883:1883"
     volumes:
-      - ./mosquitto/config:/mosquitto/config
-      - ./mosquitto/data:/mosquitto/data
-      - ./mosquitto/log:/mosquitto/log
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
 
-<<<<<<< Updated upstream
-  influxdb:
-    image: influxdb:1.8
-    ports:
-      - "8086:8086"
-    volumes:
-      - ./influxdb/data:/var/lib/influxdb
-    environment:
-      - INFLUXDB_DB=esp_bucket
-      - INFLUXDB_ADMIN_USER=root
-      - INFLUXDB_ADMIN_PASSWORD=rootroot
-
-  telegraf:
-    image: telegraf:1.24
-=======
   telegraf:
     image: telegraf:1.27
->>>>>>> Stashed changes
     volumes:
       - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf
     depends_on:
